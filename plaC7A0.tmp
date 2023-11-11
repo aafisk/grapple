@@ -1,0 +1,57 @@
+[gd_scene load_steps=9 format=3 uid="uid://c0qooo1mhphuq"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_01533"]
+[ext_resource type="Texture2D" uid="uid://faa77j38to2l" path="res://assets/manFalling.jpg" id="3_c7s4s"]
+[ext_resource type="Texture2D" uid="uid://btoq5k4l18g0g" path="res://assets/manJumping.jpg" id="4_al08n"]
+[ext_resource type="Texture2D" uid="uid://duliblybj1unj" path="res://assets/manWalkingRight.jpg" id="5_bqvs3"]
+[ext_resource type="PackedScene" uid="uid://detot4qtny8ei" path="res://grapple_gun.tscn" id="6_a30p2"]
+[ext_resource type="Texture2D" uid="uid://dwe8uj8wikl4u" path="res://assets/manWalkingRight2.jpg" id="6_ib7eo"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5xvm0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_c7s4s")
+}],
+"loop": true,
+"name": &"falling",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_al08n")
+}],
+"loop": true,
+"name": &"jumping",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_bqvs3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_ib7eo")
+}],
+"loop": true,
+"name": &"walking",
+"speed": 8.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ykk4e"]
+size = Vector2(64, 96)
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_01533")
+metadata/_edit_group_ = true
+
+[node name="rope" parent="." instance=ExtResource("6_a30p2")]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.1, 0.1)
+sprite_frames = SubResource("SpriteFrames_5xvm0")
+animation = &"walking"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ykk4e")
+
+[connection signal="hooked" from="rope" to="." method="_on_rope_hooked"]

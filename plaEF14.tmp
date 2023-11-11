@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://c0qooo1mhphuq"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_01533"]
+[ext_resource type="Texture2D" uid="uid://duliblybj1unj" path="res://art/manWalkingRight.jpg" id="2_t271r"]
+[ext_resource type="Texture2D" uid="uid://dwe8uj8wikl4u" path="res://art/manWalkingRight2.jpg" id="3_woekq"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5xvm0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_t271r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_woekq")
+}],
+"loop": true,
+"name": &"walking",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ykk4e"]
+size = Vector2(64, 96)
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_01533")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.1, 0.1)
+sprite_frames = SubResource("SpriteFrames_5xvm0")
+animation = &"walking"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ykk4e")
