@@ -13,8 +13,10 @@ extends CharacterBody2D
 @export var grapple_speed = 4000
 @export var health = 3
 @export var hooked = false
+@export var invincibile = false
 @export_range(0.0, 1.0) var friction = 0.15
 @export_range(0.0 , 1.0) var acceleration = 0.25
+
 
 var grapple = false
 
@@ -54,9 +56,15 @@ func _physics_process(delta):
 	else:
 		velocity.x = lerp(velocity.x, 0.0, friction)
 
-	var object = move_and_collide(Vector2.ZERO)
+#	var collision = move_and_collide(Vector2.ZERO)
+#
+#	var collision_count = 0
+#	while (collision and collision_count < 5):
+#		var collider = collision.get_collider()
+#		print(collider)
+	# check_hurt(object)
+	
 	move_and_slide()
-
 
 	play_animation()
 
@@ -110,7 +118,7 @@ func _on_rope_hooked(hooked_position):
 	hooked = false
 
 func check_hurt(body):
-	if body.get_collider() == "hazard":
+	if body.get_collision_layer() == 3:
 		health -= 1
 		emit_signal("hurt")
 		if health <= 0:

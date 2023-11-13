@@ -7,23 +7,10 @@
 
 [node name="Main" type="Node"]
 
-[node name="Background" type="Node" parent="."]
-
 [node name="LevelElements" type="Node" parent="."]
 
 [node name="Player" parent="LevelElements" instance=ExtResource("1_0k1up")]
 position = Vector2(576, 336)
-
-[node name="Platform" parent="LevelElements" instance=ExtResource("3_cke4r")]
-position = Vector2(504, 640)
-scale = Vector2(3, 1)
-
-[node name="Platform2" parent="LevelElements" instance=ExtResource("3_cke4r")]
-position = Vector2(808, 424)
-
-[node name="Platform3" parent="LevelElements" instance=ExtResource("3_cke4r")]
-position = Vector2(1024, 640)
-scale = Vector2(3, 1)
 
 [node name="GrappleBlock" parent="LevelElements" instance=ExtResource("4_44i2i")]
 position = Vector2(784, 312)
@@ -34,7 +21,20 @@ position = Vector2(512, 560)
 [node name="GrappleBlock3" parent="LevelElements" instance=ExtResource("4_44i2i")]
 position = Vector2(1000, 560)
 
-[node name="Hazard" parent="LevelElements" instance=ExtResource("4_vf7m0")]
-position = Vector2(840, 616)
+[node name="Hazards" type="Node" parent="LevelElements" groups=["hazard"]]
 
-[node name="Foreground" type="Node" parent="."]
+[node name="Hazard" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(840, 592)
+
+[node name="Platforms" type="Node" parent="LevelElements"]
+
+[node name="Platform" parent="LevelElements/Platforms" instance=ExtResource("3_cke4r")]
+position = Vector2(504, 640)
+scale = Vector2(3, 1)
+
+[node name="Platform2" parent="LevelElements/Platforms" instance=ExtResource("3_cke4r")]
+position = Vector2(808, 424)
+
+[node name="Platform3" parent="LevelElements/Platforms" instance=ExtResource("3_cke4r")]
+position = Vector2(1024, 640)
+scale = Vector2(3, 1)
