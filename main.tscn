@@ -1,40 +1,624 @@
-[gd_scene load_steps=5 format=3 uid="uid://o7miw7wrysh6"]
+[gd_scene load_steps=11 format=3 uid="uid://o7miw7wrysh6"]
 
 [ext_resource type="PackedScene" uid="uid://c0qooo1mhphuq" path="res://player/player.tscn" id="1_0k1up"]
+[ext_resource type="Texture2D" uid="uid://c3rwgkprkxga5" path="res://assets/background.jpg" id="1_2w2cm"]
 [ext_resource type="PackedScene" uid="uid://bhj05pdtvosa1" path="res://level elements/platform_static.tscn" id="3_cke4r"]
 [ext_resource type="PackedScene" uid="uid://8kqk2jwb4j1v" path="res://level elements/grapple_block.tscn" id="4_44i2i"]
 [ext_resource type="PackedScene" uid="uid://bvq20rp3l1llc" path="res://level elements/hazard.tscn" id="4_vf7m0"]
+[ext_resource type="PackedScene" uid="uid://duaskaj5px8x1" path="res://level elements/wall_of_death.tscn" id="5_0pcny"]
+[ext_resource type="PackedScene" uid="uid://wvo3xwyh77v5" path="res://level elements/door.tscn" id="5_et0cb"]
+[ext_resource type="PackedScene" uid="uid://cbbvl6mhuosf4" path="res://hud/hud.tscn" id="5_vckcq"]
+[ext_resource type="Script" path="res://VictoryLabel.gd" id="6_oofhu"]
+[ext_resource type="Script" path="res://Camera2D.gd" id="7_mliro"]
 
 [node name="Main" type="Node"]
+
+[node name="Background" type="Node" parent="."]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="Background"]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="Background/ParallaxBackground"]
+motion_mirroring = Vector2(2000, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/ParallaxBackground/ParallaxLayer"]
+position = Vector2(928, 336)
+scale = Vector2(2, 2)
+texture = ExtResource("1_2w2cm")
 
 [node name="LevelElements" type="Node" parent="."]
 
 [node name="Player" parent="LevelElements" instance=ExtResource("1_0k1up")]
-position = Vector2(576, 336)
+position = Vector2(288, 576)
 
-[node name="GrappleBlock" parent="LevelElements" instance=ExtResource("4_44i2i")]
-position = Vector2(784, 312)
-
-[node name="GrappleBlock2" parent="LevelElements" instance=ExtResource("4_44i2i")]
-position = Vector2(512, 560)
-
-[node name="GrappleBlock3" parent="LevelElements" instance=ExtResource("4_44i2i")]
-position = Vector2(1000, 560)
-
-[node name="Hazards" type="Node" parent="LevelElements" groups=["hazard"]]
-
-[node name="Hazard" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
-position = Vector2(840, 592)
+[node name="Camera2D" type="Camera2D" parent="LevelElements/Player"]
+limit_left = 0
+limit_top = 10
+limit_right = 8504
+limit_bottom = 640
+script = ExtResource("7_mliro")
 
 [node name="Platforms" type="Node" parent="LevelElements"]
 
 [node name="Platform" parent="LevelElements/Platforms" instance=ExtResource("3_cke4r")]
-position = Vector2(504, 640)
+position = Vector2(216, 640)
 scale = Vector2(3, 1)
 
 [node name="Platform2" parent="LevelElements/Platforms" instance=ExtResource("3_cke4r")]
-position = Vector2(808, 424)
+position = Vector2(2040, 448)
 
 [node name="Platform3" parent="LevelElements/Platforms" instance=ExtResource("3_cke4r")]
-position = Vector2(1024, 640)
+position = Vector2(632, 640)
 scale = Vector2(3, 1)
+
+[node name="Platform5" parent="LevelElements/Platforms" instance=ExtResource("3_cke4r")]
+position = Vector2(2504, 232)
+
+[node name="Platform6" parent="LevelElements/Platforms" instance=ExtResource("3_cke4r")]
+position = Vector2(1144, 640)
+scale = Vector2(3, 1)
+
+[node name="Platform4" parent="LevelElements/Platforms" instance=ExtResource("3_cke4r")]
+position = Vector2(2040, 232)
+
+[node name="Platform7" parent="LevelElements/Platforms" instance=ExtResource("3_cke4r")]
+position = Vector2(1896, 640)
+scale = Vector2(3, 1)
+
+[node name="Platform8" parent="LevelElements/Platforms" instance=ExtResource("3_cke4r")]
+position = Vector2(2952, 504)
+
+[node name="Platform10" parent="LevelElements/Platforms" instance=ExtResource("3_cke4r")]
+position = Vector2(2720, 368)
+
+[node name="Platform12" parent="LevelElements/Platforms" instance=ExtResource("3_cke4r")]
+position = Vector2(3288, 640)
+scale = Vector2(3, 1)
+
+[node name="Platform13" parent="LevelElements/Platforms" instance=ExtResource("3_cke4r")]
+position = Vector2(3488, 608)
+scale = Vector2(0.2, 1)
+
+[node name="Platform14" parent="LevelElements/Platforms" instance=ExtResource("3_cke4r")]
+position = Vector2(3712, 384)
+
+[node name="Platform15" parent="LevelElements/Platforms" instance=ExtResource("3_cke4r")]
+position = Vector2(3768, 352)
+scale = Vector2(0.2, 1)
+
+[node name="Platform16" parent="LevelElements/Platforms" instance=ExtResource("3_cke4r")]
+position = Vector2(3992, 128)
+
+[node name="Platform17" parent="LevelElements/Platforms" instance=ExtResource("3_cke4r")]
+position = Vector2(4136, 576)
+
+[node name="Platform18" parent="LevelElements/Platforms" instance=ExtResource("3_cke4r")]
+position = Vector2(4192, 544)
+scale = Vector2(0.2, 1)
+
+[node name="Platform19" parent="LevelElements/Platforms" instance=ExtResource("3_cke4r")]
+position = Vector2(4392, 360)
+scale = Vector2(1.5, 1)
+
+[node name="Platform20" parent="LevelElements/Platforms" instance=ExtResource("3_cke4r")]
+position = Vector2(4576, 640)
+scale = Vector2(1.5, 1)
+
+[node name="Platform21" parent="LevelElements/Platforms" instance=ExtResource("3_cke4r")]
+position = Vector2(4896, 640)
+scale = Vector2(3, 1)
+
+[node name="Platform22" parent="LevelElements/Platforms" instance=ExtResource("3_cke4r")]
+position = Vector2(5096, 408)
+rotation = 1.5708
+scale = Vector2(3, 1)
+
+[node name="Platform23" parent="LevelElements/Platforms" instance=ExtResource("3_cke4r")]
+position = Vector2(5448, 208)
+scale = Vector2(3.2, 1)
+
+[node name="Platform24" parent="LevelElements/Platforms" instance=ExtResource("3_cke4r")]
+position = Vector2(5695, 355)
+rotation = 1.5708
+scale = Vector2(2.27, 1)
+
+[node name="Platform9" parent="LevelElements/Platforms" instance=ExtResource("3_cke4r")]
+position = Vector2(5008, 208)
+
+[node name="Platform11" parent="LevelElements/Platforms" instance=ExtResource("3_cke4r")]
+position = Vector2(5168, 360)
+scale = Vector2(0.75, 1)
+
+[node name="Platform26" parent="LevelElements/Platforms" instance=ExtResource("3_cke4r")]
+position = Vector2(5624, 504)
+scale = Vector2(0.75, 1)
+
+[node name="Platform25" parent="LevelElements/Platforms" instance=ExtResource("3_cke4r")]
+position = Vector2(5168, 640)
+scale = Vector2(0.75, 1)
+
+[node name="Platform27" parent="LevelElements/Platforms" instance=ExtResource("3_cke4r")]
+position = Vector2(5776, 640)
+scale = Vector2(3.2, 1)
+
+[node name="Platform28" parent="LevelElements/Platforms" instance=ExtResource("3_cke4r")]
+position = Vector2(6144, 448)
+
+[node name="Platform29" parent="LevelElements/Platforms" instance=ExtResource("3_cke4r")]
+position = Vector2(6848, 320)
+
+[node name="Platform30" parent="LevelElements/Platforms" instance=ExtResource("3_cke4r")]
+position = Vector2(7296, 528)
+
+[node name="Platform31" parent="LevelElements/Platforms" instance=ExtResource("3_cke4r")]
+position = Vector2(7040, 528)
+
+[node name="Platform32" parent="LevelElements/Platforms" instance=ExtResource("3_cke4r")]
+position = Vector2(7728, 336)
+scale = Vector2(4, 1)
+
+[node name="Platform33" parent="LevelElements/Platforms" instance=ExtResource("3_cke4r")]
+position = Vector2(8032, 328)
+rotation = 1.5708
+scale = Vector2(4, 1)
+
+[node name="GrapplePoints" type="Node" parent="LevelElements"]
+
+[node name="GrappleBlock3" parent="LevelElements/GrapplePoints" instance=ExtResource("4_44i2i")]
+position = Vector2(2040, 168)
+
+[node name="GrappleBlock" parent="LevelElements/GrapplePoints" instance=ExtResource("4_44i2i")]
+position = Vector2(2040, 384)
+
+[node name="GrappleBlock4" parent="LevelElements/GrapplePoints" instance=ExtResource("4_44i2i")]
+position = Vector2(2504, 168)
+
+[node name="GrappleBlock2" parent="LevelElements/GrapplePoints" instance=ExtResource("4_44i2i")]
+position = Vector2(1752, 560)
+
+[node name="GrappleBlock5" parent="LevelElements/GrapplePoints" instance=ExtResource("4_44i2i")]
+position = Vector2(3712, 312)
+
+[node name="GrappleBlock6" parent="LevelElements/GrapplePoints" instance=ExtResource("4_44i2i")]
+position = Vector2(3992, 56)
+
+[node name="GrappleBlock8" parent="LevelElements/GrapplePoints" instance=ExtResource("4_44i2i")]
+position = Vector2(4352, 288)
+
+[node name="GrappleBlock7" parent="LevelElements/GrapplePoints" instance=ExtResource("4_44i2i")]
+position = Vector2(5632, 280)
+
+[node name="GrappleBlock9" parent="LevelElements/GrapplePoints" instance=ExtResource("4_44i2i")]
+position = Vector2(5168, 432)
+
+[node name="GrappleBlock10" parent="LevelElements/GrapplePoints" instance=ExtResource("4_44i2i")]
+position = Vector2(5632, 568)
+
+[node name="GrappleBlock11" parent="LevelElements/GrapplePoints" instance=ExtResource("4_44i2i")]
+position = Vector2(5008, 128)
+
+[node name="GrappleBlock12" parent="LevelElements/GrapplePoints" instance=ExtResource("4_44i2i")]
+position = Vector2(6144, 360)
+
+[node name="GrappleBlock13" parent="LevelElements/GrapplePoints" instance=ExtResource("4_44i2i")]
+position = Vector2(6864, 192)
+
+[node name="GrappleBlock15" parent="LevelElements/GrapplePoints" instance=ExtResource("4_44i2i")]
+position = Vector2(6576, 192)
+
+[node name="GrappleBlock16" parent="LevelElements/GrapplePoints" instance=ExtResource("4_44i2i")]
+position = Vector2(6336, 192)
+
+[node name="GrappleBlock14" parent="LevelElements/GrapplePoints" instance=ExtResource("4_44i2i")]
+position = Vector2(7504, 256)
+
+[node name="GrappleBlock17" parent="LevelElements/GrapplePoints" instance=ExtResource("4_44i2i")]
+position = Vector2(7296, 448)
+
+[node name="GrappleBlock18" parent="LevelElements/GrapplePoints" instance=ExtResource("4_44i2i")]
+position = Vector2(6672, 192)
+
+[node name="GrappleBlock19" parent="LevelElements/GrapplePoints" instance=ExtResource("4_44i2i")]
+position = Vector2(6432, 192)
+
+[node name="GrappleBlock20" parent="LevelElements/GrapplePoints" instance=ExtResource("4_44i2i")]
+position = Vector2(6768, 192)
+
+[node name="GrappleBlock21" parent="LevelElements/GrapplePoints" instance=ExtResource("4_44i2i")]
+position = Vector2(6528, 192)
+
+[node name="GrappleBlock23" parent="LevelElements/GrapplePoints" instance=ExtResource("4_44i2i")]
+position = Vector2(6624, 192)
+
+[node name="GrappleBlock24" parent="LevelElements/GrapplePoints" instance=ExtResource("4_44i2i")]
+position = Vector2(6384, 192)
+
+[node name="GrappleBlock25" parent="LevelElements/GrapplePoints" instance=ExtResource("4_44i2i")]
+position = Vector2(6720, 192)
+
+[node name="GrappleBlock26" parent="LevelElements/GrapplePoints" instance=ExtResource("4_44i2i")]
+position = Vector2(6480, 192)
+
+[node name="GrappleBlock27" parent="LevelElements/GrapplePoints" instance=ExtResource("4_44i2i")]
+position = Vector2(6816, 192)
+
+[node name="GrappleBlock22" parent="LevelElements/GrapplePoints" instance=ExtResource("4_44i2i")]
+position = Vector2(6240, 192)
+
+[node name="GrappleBlock28" parent="LevelElements/GrapplePoints" instance=ExtResource("4_44i2i")]
+position = Vector2(6288, 192)
+
+[node name="Hazards" type="Node" parent="LevelElements"]
+
+[node name="Hazard" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(888, 640)
+scale = Vector2(1.2, 1)
+
+[node name="Hazard3" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(1456, 640)
+
+[node name="Hazard4" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(1648, 640)
+
+[node name="Hazard5" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(1584, 640)
+
+[node name="Hazard6" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(1520, 640)
+
+[node name="Hazard7" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(2208, 640)
+
+[node name="Hazard8" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(2400, 640)
+
+[node name="Hazard9" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(2336, 640)
+
+[node name="Hazard10" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(2272, 640)
+
+[node name="Hazard11" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(1392, 640)
+
+[node name="Hazard12" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(2144, 640)
+
+[node name="Hazard13" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(2528, 640)
+
+[node name="Hazard14" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(2720, 640)
+
+[node name="Hazard15" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(2656, 640)
+
+[node name="Hazard16" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(2592, 640)
+
+[node name="Hazard17" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(2464, 640)
+
+[node name="Hazard18" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(2848, 640)
+
+[node name="Hazard19" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(3040, 640)
+
+[node name="Hazard20" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(2976, 640)
+
+[node name="Hazard21" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(2912, 640)
+
+[node name="Hazard22" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(2784, 640)
+
+[node name="Hazard23" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(3600, 640)
+
+[node name="Hazard24" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(3792, 640)
+
+[node name="Hazard25" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(3728, 640)
+
+[node name="Hazard26" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(3664, 640)
+
+[node name="Hazard27" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(3536, 640)
+
+[node name="Hazard28" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(3920, 640)
+
+[node name="Hazard29" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(4112, 640)
+
+[node name="Hazard30" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(4048, 640)
+
+[node name="Hazard31" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(3984, 640)
+
+[node name="Hazard32" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(3856, 640)
+
+[node name="Hazard33" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(4240, 640)
+
+[node name="Hazard34" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(4432, 640)
+
+[node name="Hazard35" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(4368, 640)
+
+[node name="Hazard36" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(4304, 640)
+
+[node name="Hazard37" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(4176, 640)
+
+[node name="Hazard38" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(5320, 360)
+
+[node name="Hazard39" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(5256, 360)
+
+[node name="Hazard40" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(5448, 360)
+
+[node name="Hazard43" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(5512, 360)
+
+[node name="Hazard44" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(5384, 360)
+
+[node name="Hazard41" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(5344, 504)
+
+[node name="Hazard42" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(5280, 504)
+
+[node name="Hazard45" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(5472, 504)
+
+[node name="Hazard46" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(5536, 504)
+
+[node name="Hazard47" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(5408, 504)
+
+[node name="Hazard48" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(5232, 128)
+rotation = 4.71239
+scale = Vector2(2, 1)
+
+[node name="Hazard49" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(5320, 640)
+
+[node name="Hazard50" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(5256, 640)
+
+[node name="Hazard51" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(5448, 640)
+
+[node name="Hazard52" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(5512, 640)
+
+[node name="Hazard53" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(5384, 640)
+
+[node name="Hazard54" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(6304, 640)
+scale = Vector2(3, 1)
+
+[node name="Hazard55" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(6104, 640)
+scale = Vector2(3, 1)
+
+[node name="Hazard57" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(6704, 640)
+scale = Vector2(3, 1)
+
+[node name="Hazard58" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(6504, 640)
+scale = Vector2(3, 1)
+
+[node name="Hazard56" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(7104, 640)
+scale = Vector2(3, 1)
+
+[node name="Hazard59" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(6904, 640)
+scale = Vector2(3, 1)
+
+[node name="Hazard60" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(7504, 640)
+scale = Vector2(3, 1)
+
+[node name="Hazard61" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(7304, 640)
+scale = Vector2(3, 1)
+
+[node name="Hazard62" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(7704, 640)
+scale = Vector2(3, 1)
+
+[node name="Hazard63" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(8104, 640)
+scale = Vector2(3, 1)
+
+[node name="Hazard64" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(7904, 640)
+scale = Vector2(3, 1)
+
+[node name="Hazard65" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(8504, 640)
+scale = Vector2(3, 1)
+
+[node name="Hazard66" parent="LevelElements/Hazards" instance=ExtResource("4_vf7m0")]
+position = Vector2(8304, 640)
+scale = Vector2(3, 1)
+
+[node name="WallOfDeath" parent="LevelElements/Hazards" instance=ExtResource("5_0pcny")]
+position = Vector2(32, 304)
+scale = Vector2(1, 1.1)
+
+[node name="Door" parent="LevelElements" instance=ExtResource("5_et0cb")]
+position = Vector2(7920, 256)
+
+[node name="HUD" type="Node" parent="."]
+
+[node name="VictoryLabel" type="Label" parent="HUD"]
+anchors_preset = -1
+anchor_left = 6.887
+anchor_top = 0.517
+anchor_right = 6.887
+anchor_bottom = 0.517
+offset_left = -56.0503
+offset_top = -16.05
+offset_right = 60.9497
+offset_bottom = 9.94998
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 1
+text = "Escape Success"
+script = ExtResource("6_oofhu")
+
+[node name="HUD" parent="HUD" instance=ExtResource("5_vckcq")]
+
+[node name="ColorRect" type="ColorRect" parent="HUD"]
+offset_left = 824.0
+offset_top = 504.0
+offset_right = 952.0
+offset_bottom = 544.0
+color = Color(0, 0, 0, 1)
+
+[node name="jump tip" type="Label" parent="HUD/ColorRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.772
+anchor_top = 0.812
+anchor_right = 0.772
+anchor_bottom = 0.812
+offset_left = -90.816
+offset_top = -24.48
+offset_right = 26.184
+offset_bottom = 1.52
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 1
+text = "SPACE to jump"
+
+[node name="ColorRect2" type="ColorRect" parent="HUD"]
+offset_left = 1456.0
+offset_top = 504.0
+offset_right = 1584.0
+offset_bottom = 544.0
+color = Color(0, 0, 0, 1)
+
+[node name="GrappleTip" type="Label" parent="HUD"]
+anchors_preset = -1
+anchor_left = 0.772
+anchor_top = 0.812
+anchor_right = 0.772
+anchor_bottom = 0.812
+offset_left = 600.2
+offset_top = -15.8
+offset_right = 665.2
+offset_bottom = 10.2
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 1
+text = "Press M "
+
+[node name="ColorRect3" type="ColorRect" parent="HUD"]
+offset_left = 2064.0
+offset_top = 504.0
+offset_right = 2240.0
+offset_bottom = 568.0
+color = Color(0, 0, 0, 1)
+
+[node name="GrappleTip2" type="Label" parent="HUD"]
+anchors_preset = -1
+anchor_left = 0.772
+anchor_top = 0.812
+anchor_right = 0.772
+anchor_bottom = 0.812
+offset_left = 1192.2
+offset_top = -15.8
+offset_right = 1350.2
+offset_bottom = 36.2
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 1
+text = "Hold a direction and press M to aim "
+autowrap_mode = 2
+
+[node name="ColorRect4" type="ColorRect" parent="HUD"]
+offset_left = 3232.0
+offset_top = 504.0
+offset_right = 3408.0
+offset_bottom = 568.0
+color = Color(0, 0, 0, 1)
+
+[node name="GrappleTip3" type="Label" parent="HUD"]
+anchors_preset = -1
+anchor_left = 0.772
+anchor_top = 0.812
+anchor_right = 0.772
+anchor_bottom = 0.812
+offset_left = 2352.2
+offset_top = -15.8
+offset_right = 2520.2
+offset_bottom = 36.2
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 1
+text = "Can you hold two directions at once??"
+autowrap_mode = 2
+
+[connection signal="hurt" from="LevelElements/Player" to="HUD/HUD" method="_on_player_hurt"]
+[connection signal="hazard_entered" from="LevelElements/Hazards/Hazard" to="LevelElements/Player" method="_on_hazard_entered"]
+[connection signal="hazard_entered" from="LevelElements/Hazards/Hazard3" to="LevelElements/Player" method="_on_hazard_entered"]
+[connection signal="hazard_entered" from="LevelElements/Hazards/Hazard5" to="LevelElements/Player" method="_on_hazard_entered"]
+[connection signal="hazard_entered" from="LevelElements/Hazards/Hazard7" to="LevelElements/Player" method="_on_hazard_entered"]
+[connection signal="hazard_entered" from="LevelElements/Hazards/Hazard9" to="LevelElements/Player" method="_on_hazard_entered"]
+[connection signal="hazard_entered" from="LevelElements/Hazards/Hazard12" to="LevelElements/Player" method="_on_hazard_entered"]
+[connection signal="hazard_entered" from="LevelElements/Hazards/Hazard13" to="LevelElements/Player" method="_on_hazard_entered"]
+[connection signal="hazard_entered" from="LevelElements/Hazards/Hazard15" to="LevelElements/Player" method="_on_hazard_entered"]
+[connection signal="hazard_entered" from="LevelElements/Hazards/Hazard17" to="LevelElements/Player" method="_on_hazard_entered"]
+[connection signal="hazard_entered" from="LevelElements/Hazards/Hazard18" to="LevelElements/Player" method="_on_hazard_entered"]
+[connection signal="hazard_entered" from="LevelElements/Hazards/Hazard20" to="LevelElements/Player" method="_on_hazard_entered"]
+[connection signal="hazard_entered" from="LevelElements/Hazards/Hazard22" to="LevelElements/Player" method="_on_hazard_entered"]
+[connection signal="hazard_entered" from="LevelElements/Hazards/Hazard23" to="LevelElements/Player" method="_on_hazard_entered"]
+[connection signal="hazard_entered" from="LevelElements/Hazards/Hazard25" to="LevelElements/Player" method="_on_hazard_entered"]
+[connection signal="hazard_entered" from="LevelElements/Hazards/Hazard27" to="LevelElements/Player" method="_on_hazard_entered"]
+[connection signal="hazard_entered" from="LevelElements/Hazards/Hazard28" to="LevelElements/Player" method="_on_hazard_entered"]
+[connection signal="hazard_entered" from="LevelElements/Hazards/Hazard30" to="LevelElements/Player" method="_on_hazard_entered"]
+[connection signal="hazard_entered" from="LevelElements/Hazards/Hazard32" to="LevelElements/Player" method="_on_hazard_entered"]
+[connection signal="hazard_entered" from="LevelElements/Hazards/Hazard33" to="LevelElements/Player" method="_on_hazard_entered"]
+[connection signal="hazard_entered" from="LevelElements/Hazards/Hazard35" to="LevelElements/Player" method="_on_hazard_entered"]
+[connection signal="hazard_entered" from="LevelElements/Hazards/Hazard37" to="LevelElements/Player" method="_on_hazard_entered"]
+[connection signal="hazard_entered" from="LevelElements/Hazards/Hazard39" to="LevelElements/Player" method="_on_hazard_entered"]
+[connection signal="hazard_entered" from="LevelElements/Hazards/Hazard40" to="LevelElements/Player" method="_on_hazard_entered"]
+[connection signal="hazard_entered" from="LevelElements/Hazards/Hazard44" to="LevelElements/Player" method="_on_hazard_entered"]
+[connection signal="hazard_entered" from="LevelElements/Hazards/Hazard42" to="LevelElements/Player" method="_on_hazard_entered"]
+[connection signal="hazard_entered" from="LevelElements/Hazards/Hazard45" to="LevelElements/Player" method="_on_hazard_entered"]
+[connection signal="hazard_entered" from="LevelElements/Hazards/Hazard47" to="LevelElements/Player" method="_on_hazard_entered"]
+[connection signal="hazard_entered" from="LevelElements/Hazards/Hazard50" to="LevelElements/Player" method="_on_hazard_entered"]
+[connection signal="hazard_entered" from="LevelElements/Hazards/Hazard51" to="LevelElements/Player" method="_on_hazard_entered"]
+[connection signal="hazard_entered" from="LevelElements/Hazards/Hazard53" to="LevelElements/Player" method="_on_hazard_entered"]
+[connection signal="hazard_entered" from="LevelElements/Hazards/Hazard55" to="LevelElements/Player" method="_on_hazard_entered"]
+[connection signal="hazard_entered" from="LevelElements/Hazards/Hazard58" to="LevelElements/Player" method="_on_hazard_entered"]
+[connection signal="hazard_entered" from="LevelElements/Hazards/Hazard59" to="LevelElements/Player" method="_on_hazard_entered"]
+[connection signal="hazard_entered" from="LevelElements/Hazards/Hazard61" to="LevelElements/Player" method="_on_hazard_entered"]
+[connection signal="hazard_entered" from="LevelElements/Hazards/Hazard64" to="LevelElements/Player" method="_on_hazard_entered"]
+[connection signal="hazard_entered" from="LevelElements/Hazards/Hazard66" to="LevelElements/Player" method="_on_hazard_entered"]
+[connection signal="hazard_entered" from="LevelElements/Hazards/WallOfDeath" to="LevelElements/Player" method="_on_hazard_entered"]
+[connection signal="door_entered" from="LevelElements/Door" to="LevelElements/Player" method="_on_door_entered"]
+[connection signal="door_entered" from="LevelElements/Door" to="HUD/VictoryLabel" method="_on_door_door_entered"]
+[connection signal="start_game" from="HUD/HUD" to="LevelElements/Player" method="_on_hud_start_game"]
+[connection signal="start_game" from="HUD/HUD" to="LevelElements/Player/Camera2D" method="_on_hud_start_game"]
+[connection signal="start_game" from="HUD/HUD" to="LevelElements/Hazards/WallOfDeath" method="_on_hud_start_game"]
+[connection signal="switch" from="HUD/HUD" to="LevelElements/Player" method="_on_hud_switch"]

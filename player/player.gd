@@ -11,9 +11,15 @@ extends CharacterBody2D
 @export var jump_speed = -800
 @export var gravity = 4000
 @export var grapple_speed = 4000
+
 @export var health = 3
+@export var invincibility_time = 5.0
+
+@export var robot = false
+@export var play = false
 @export var hooked = false
-@export var invincibile = false
+@export var invincible = false
+
 @export_range(0.0, 1.0) var friction = 0.15
 @export_range(0.0 , 1.0) var acceleration = 0.25
 
@@ -30,50 +36,51 @@ func _ready():
 
 func _physics_process(delta):
 	
-	if hooked:
-		velocity.y = 0
-	else:
-		velocity.y += gravity * delta
+	if health > 0 && play:
+		
+		if hooked:
+			velocity.y = 0
+		else:
+			velocity.y += gravity * delta
 
 	# Get input based on direction and set x velocity
-	var direction = Input.get_axis("left", "right")
+		var direction = Input.get_axis("left", "right")
 
-	# Determine the direction the player is looking
-	if !$rope.fired:
-		set_rope_direction()
+		# Determine the direction the player is looking
+		if !$rope.fired:
+			set_rope_direction()
 
-	# Fire the grappling hook
-	if Input.is_action_pressed("grapple") && !$rope.fired:
-		$rope.launch_grapple()
+		# Fire the grappling hook
+		if Input.is_action_pressed("grapple") && !$rope.fired:
+			$rope.launch_grapple()
 
-	# Only jump when the player is on the ground
-	if Input.is_action_just_pressed("jump") and is_on_floor() and !hooked:
-		velocity.y = jump_speed
+		# Only jump when the player is on the ground
+		if Input.is_action_just_pressed("jump") and is_on_floor() and !hooked:
+			velocity.y = jump_speed
 
-	# Move
-	if direction != 0:
-		velocity.x = lerp(velocity.x, direction * speed, acceleration)
-	else:
-		velocity.x = lerp(velocity.x, 0.0, friction)
+		# Move
+		if direction != 0:
+			velocity.x = lerp(velocity.x, direction * speed, acceleration)
+		else:
+			velocity.x = lerp(velocity.x, 0.0, friction)
 
-#	var collision = move_and_collide(Vector2.ZERO)
-#
-#	var collision_count = 0
-#	while (collision and collision_count < 5):
-#		var collider = collision.get_collider()
-#		print(collider)
-	# check_hurt(object)
+		move_and_slide()
 	
-	move_and_slide()
-
 	play_animation()
-
+	
+	#	var collision = move_and_collide(Vector2.ZERO)
+	#
+	#	var collision_count = 0
+	#	while (collision and collision_count < 5):
+	#		var collider = collision.get_collider()
+	#		print(collider)
+		# check_hurt(object)
+	
 	# keep the player on screen
 	# position = position.clamp(Vector2.ZERO, screen_size)
 
-
 func set_rope_direction():
-	var look_at_point = Vector2(position.x, position.y)
+	var look_at_point = Vector2(position.x, position.y - 15)
 	# Left
 	if Input.is_action_pressed("left"):
 		look_at_point.y += 10
@@ -88,43 +95,70 @@ func set_rope_direction():
 
 func play_animation():
 	# Determine and play animations
-	if $rope.fired:
-		$AnimatedSprite2D.animation = "grappling"
-	elif is_on_floor():
-		$AnimatedSprite2D.animation = "walking"
-	elif velocity.y < 0:
-		$AnimatedSprite2D.animation = "jumping"
-	elif velocity.y > 50:
-		$AnimatedSprite2D.animation = "falling"
+	var animation_suffix = ""
+	
+	if robot:
+		animation_suffix = "_Rob"
+	
+	if health > 0:
+		if $rope.fired:
+			$AnimatedSprite2D.animation = "grappling" + animation_suffix
+		elif is_on_floor():
+			$AnimatedSprite2D.animation = "walking" + animation_suffix
+			#$AnimatedSprite2D.animation = "walking_Rob"
+		elif velocity.y < 0:
+			$AnimatedSprite2D.animation = "jumping" + animation_suffix
+		elif velocity.y > 50:
+			$AnimatedSprite2D.animation = "falling" + animation_suffix 
 
-	# Flip sprite based on direction
-	if abs(velocity.x) == 0:
-		$AnimatedSprite2D.stop()
+		# Flip sprite based on direction
+		if !hooked:
+			if abs(velocity.x) == 0:
+				$AnimatedSprite2D.stop()
+			else:
+				$AnimatedSprite2D.flip_h = velocity.x < 0
+	# Dead
 	else:
-		$AnimatedSprite2D.flip_h = velocity.x < 0
+		$AnimatedSprite2D.animation = "dead" + animation_suffix
+		await get_tree().create_timer(3).timeout
+		get_tree().reload_current_scene()
 
 	# Play the animation
 	$AnimatedSprite2D.play()
-	
+
 
 func _on_rope_hooked(hooked_position):
 	hooked = true
 	await get_tree().create_timer(0.1).timeout
 	await get_tree().create_timer(0.1).timeout
 	var tween = get_tree().create_tween()
-	tween.tween_property(self, "position", hooked_position, 0.75)
+	tween.tween_property(self, "position", hooked_position - Vector2(0.0, -15.0), 0.75)
 	velocity = Vector2.ZERO
 	await get_tree().create_timer(0.75).timeout
 	hooked = false
 
-func check_hurt(body):
-	if body.get_collision_layer() == 3:
+
+func _on_hazard_entered():
+	print(invincible)
+	if (!invincible):
 		health -= 1
 		emit_signal("hurt")
-		if health <= 0:
-			hide()
-		await get_tree().create_timer(5).timeout
+		$HurtSound.play()
+		if health > 0:
+			invincible = true
+			$AnimatedSprite2D.animation = "hurt"
+			await get_tree().create_timer(invincibility_time).timeout
+			invincible = false
 
+func _on_hud_start_game():
+	play = true
+
+func _on_hud_switch():
+	robot = !robot
+
+func _on_door_entered():
+	hide()
+	
 #func check_lr_input(velocity):
 #	if Input.is_action_pressed("walkLeft"):
 #		velocity.x -= 1
@@ -206,7 +240,3 @@ func check_hurt(body):
 #		$AnimatedSprite2D.flip_h = velocity.x < 0
 #	else:
 #		$AnimatedSprite2D.stop()
-
-
-
-

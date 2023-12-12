@@ -13,5 +13,5 @@ offset_left = -72.0
 offset_top = -16.0
 offset_right = 72.0
 offset_bottom = 16.0
-color = Color(0.615686, 0.615686, 0.615686, 1)
+color = Color(0.756863, 0.345098, 0.819608, 1)
 metadata/_edit_use_anchors_ = true

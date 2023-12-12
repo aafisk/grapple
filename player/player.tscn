@@ -1,18 +1,40 @@
-[gd_scene load_steps=10 format=3 uid="uid://c0qooo1mhphuq"]
+[gd_scene load_steps=16 format=3 uid="uid://c0qooo1mhphuq"]
 
-[ext_resource type="Script" path="res://player/player.gd" id="1_wx71a"]
-[ext_resource type="Texture2D" uid="uid://faa77j38to2l" path="res://assets/manFalling.jpg" id="3_c7s4s"]
-[ext_resource type="Texture2D" uid="uid://btoq5k4l18g0g" path="res://assets/manJumping.jpg" id="4_al08n"]
-[ext_resource type="Texture2D" uid="uid://kt65u6t10pby" path="res://assets/manWithGun.jpg" id="4_tdqo8"]
-[ext_resource type="Texture2D" uid="uid://duliblybj1unj" path="res://assets/manWalkingRight.jpg" id="5_bqvs3"]
-[ext_resource type="PackedScene" uid="uid://detot4qtny8ei" path="res://player/grapple_gun.tscn" id="6_a30p2"]
-[ext_resource type="Texture2D" uid="uid://dwe8uj8wikl4u" path="res://assets/manWalkingRight2.jpg" id="6_ib7eo"]
+[ext_resource type="Script" path="res://player/player.gd" id="1_wnkrb"]
+[ext_resource type="PackedScene" uid="uid://detot4qtny8ei" path="res://player/grapple_gun.tscn" id="2_lkv3f"]
+[ext_resource type="Texture2D" uid="uid://dvq2fu4yno41l" path="res://assets/manLayingDown.jpg" id="3_23fry"]
+[ext_resource type="Texture2D" uid="uid://faa77j38to2l" path="res://assets/manFalling.jpg" id="3_e08yv"]
+[ext_resource type="Texture2D" uid="uid://kt65u6t10pby" path="res://assets/manWithGun.jpg" id="4_5mwai"]
+[ext_resource type="Texture2D" uid="uid://btoq5k4l18g0g" path="res://assets/manJumping.jpg" id="5_kkbhq"]
+[ext_resource type="Texture2D" uid="uid://duliblybj1unj" path="res://assets/manWalkingRight.jpg" id="6_nyuc2"]
+[ext_resource type="Texture2D" uid="uid://dwe8uj8wikl4u" path="res://assets/manWalkingRight2.jpg" id="7_jl1nd"]
+[ext_resource type="Texture2D" uid="uid://beh1ht4v5f05n" path="res://assets/Robot/walk1.png" id="9_2koy0"]
+[ext_resource type="AudioStream" uid="uid://dm4eq50y5ha8s" path="res://assets/Sound/MetalPipeFalling.mp3" id="9_y8egk"]
+[ext_resource type="Texture2D" uid="uid://bjba4bf0g7xcc" path="res://assets/Robot/walk2.png" id="10_ixuq1"]
+[ext_resource type="Texture2D" uid="uid://dvd3ib86vtn1j" path="res://assets/Robot/walk3.png" id="11_evm12"]
+[ext_resource type="Texture2D" uid="uid://c6ehp1ho3qlfq" path="res://assets/Robot/walk4.png" id="12_0yyw1"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5xvm0"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_c7s4s")
+"texture": ExtResource("3_23fry")
+}],
+"loop": true,
+"name": &"dead",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_ixuq1")
+}],
+"loop": true,
+"name": &"dead_Rob",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_e08yv")
 }],
 "loop": true,
 "name": &"falling",
@@ -20,7 +42,15 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("4_tdqo8")
+"texture": ExtResource("11_evm12")
+}],
+"loop": true,
+"name": &"falling_Rob",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_5mwai")
 }],
 "loop": true,
 "name": &"grappling",
@@ -28,7 +58,15 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("4_al08n")
+"texture": ExtResource("12_0yyw1")
+}],
+"loop": true,
+"name": &"grappling_Rob",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_kkbhq")
 }],
 "loop": true,
 "name": &"jumping",
@@ -36,33 +74,62 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("5_bqvs3")
+"texture": ExtResource("11_evm12")
+}],
+"loop": true,
+"name": &"jumping_Rob",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_nyuc2")
 }, {
 "duration": 1.0,
-"texture": ExtResource("6_ib7eo")
+"texture": ExtResource("7_jl1nd")
 }],
 "loop": true,
 "name": &"walking",
 "speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_2koy0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_ixuq1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_evm12")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_0yyw1")
+}],
+"loop": true,
+"name": &"walking_Rob",
+"speed": 6.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ykk4e"]
 size = Vector2(64, 96)
 
-[node name="Player" type="CharacterBody2D" groups=["hazard"]]
+[node name="Player" type="CharacterBody2D"]
 collision_layer = 5
 collision_mask = 5
-script = ExtResource("1_wx71a")
+script = ExtResource("1_wnkrb")
 metadata/_edit_group_ = true
 
-[node name="rope" parent="." instance=ExtResource("6_a30p2")]
+[node name="rope" parent="." instance=ExtResource("2_lkv3f")]
+position = Vector2(0, -15)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.1, 0.1)
+scale = Vector2(0.05, 0.05)
 sprite_frames = SubResource("SpriteFrames_5xvm0")
-animation = &"walking"
+animation = &"walking_Rob"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_ykk4e")
+
+[node name="HurtSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_y8egk")
 
 [connection signal="hooked" from="rope" to="." method="_on_rope_hooked"]

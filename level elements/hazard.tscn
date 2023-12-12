@@ -1,33 +1,60 @@
-[gd_scene load_steps=4 format=3 uid="uid://bvq20rp3l1llc"]
+[gd_scene load_steps=9 format=3 uid="uid://bvq20rp3l1llc"]
 
 [ext_resource type="Script" path="res://level elements/hazard.gd" id="1_vql58"]
+[ext_resource type="Texture2D" uid="uid://b8g3h6cl1rtbx" path="res://assets/hazard 1.png" id="2_g7e04"]
+[ext_resource type="Texture2D" uid="uid://dfiafo3v8ixj8" path="res://assets/hazard 3.png" id="3_jt1kd"]
+[ext_resource type="Texture2D" uid="uid://biuhj3smb2urx" path="res://assets/hazard 4.png" id="4_dq4p2"]
+[ext_resource type="Texture2D" uid="uid://cqe4e3u0q8hck" path="res://assets/hazard 2.png" id="5_q7ckt"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6g207"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_g7e04")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_jt1kd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_dq4p2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_q7ckt")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ybimi"]
-size = Vector2(64, 32)
+size = Vector2(64, 32.35)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4kmhj"]
-size = Vector2(66, 34)
+size = Vector2(66, 33)
 
 [node name="Hazard" type="StaticBody2D"]
 collision_layer = 4
 collision_mask = 4
 script = ExtResource("1_vql58")
 
-[node name="ColorRect" type="ColorRect" parent="."]
-offset_left = -33.0
-offset_top = -17.0
-offset_right = 33.0
-offset_bottom = 17.0
-color = Color(1, 0, 0, 1)
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(3.8147e-06, -3)
+scale = Vector2(0.231884, 0.349515)
+sprite_frames = SubResource("SpriteFrames_6g207")
+autoplay = "default"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1.5)
 shape = SubResource("RectangleShape2D_ybimi")
+debug_color = Color(0.984314, 0, 0.329412, 0.419608)
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Hitbox" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0, 1.5)
 shape = SubResource("RectangleShape2D_4kmhj")
+debug_color = Color(0.345098, 0.486275, 1, 0.419608)
 
 [connection signal="hazard_entered" from="." to="." method="_on_hazard_entered"]
-[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="area_entered" from="Hitbox" to="." method="_on_area_2d_area_entered"]
+[connection signal="body_entered" from="Hitbox" to="." method="_on_area_2d_body_entered"]
